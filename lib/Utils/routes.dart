@@ -1,5 +1,6 @@
 import 'package:go_router/go_router.dart';
 import 'package:simsar_web/Layouts/main_layout.dart';
+import 'package:simsar_web/Screens/admin_property_details_screen.dart';
 
 import 'package:simsar_web/Screens/all_properties_screen.dart';
 import 'package:simsar_web/Screens/pending_properties_screen.dart';
@@ -13,15 +14,25 @@ class AppRouter {
   static const String pendingPropertiesScreen = '/properties/pending';
   static const String allUsersScreen = '/users/all';
   static const String pendingUsersScreen = '/users/pending';
+  static const String propertyDetails = '/property';
   
   static final GoRouter router = GoRouter(
-  initialLocation: allPropertiesScreen,
+  initialLocation: '/property/5',
   routes: [
     ShellRoute(
       builder: (context, state, child) {
         return MainWebLayout(child: child);
       },
       routes: [
+        GoRoute(
+        path: '$propertyDetails/:propertyId',
+        builder: (context, state) {
+          final id = int.parse(state.pathParameters['propertyId'] ?? '0');
+
+
+          return AdminPropertyDetailsScreen(apartmentId: id);
+        }
+        ),
         GoRoute(
           path: allPropertiesScreen,
           builder: (context, state) => const AllPropertiesScreen(),

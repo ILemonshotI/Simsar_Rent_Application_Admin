@@ -73,8 +73,35 @@ class Property {
     );
 
   }
+  factory Property.fromJson(Map<String, dynamic> json) {
+    return Property(
+      status: "",
+      id: json['id'] as int,
+      title: json['title'] as String,
+      province: ProvinceApiMapper.fromApi(json['province']),
+      city: CityApiMapper.fromApi(json['city']),
+      description: json['description'] as String,
+      bedrooms: json['rooms'] as int,
+      bathrooms: json['bathrooms'] as int,
+      parking: json['parking'] as bool,
+      propertyType: PropertyTypeApiMapper.fromApi(json['type']),
+      pricePerDay: double.parse(json['price_per_day']),
+      images: List<String>.from(json['images'] ?? []),
+
+      areaSqft: json['area'],
+      buildYear: json['build_year'],
+      reviews: [],
+
+      agent: Agent.fromJson(json['owner']),
+
+      reviewsAvgRating: 0.0,
+      reviewsCount: 0,
+
+    );
+  }
 
 }
+
 
 class Agent {
     final int id;
