@@ -1,0 +1,42 @@
+import 'package:flutter/material.dart';
+import 'package:simsar_web/Theme/app_colors.dart';
+import 'package:simsar_web/Theme/text_theme.dart'; 
+
+
+class RatingTile extends StatelessWidget {
+  final double rating;
+
+  const RatingTile({
+    super.key, 
+    this.rating = 0,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+      decoration: BoxDecoration(
+        // Use your theme color for the light cream background
+        color: Theme.of(context).brightness == Brightness.dark
+            ? SAppColors.darkReviewBackground
+            : SAppColors.reviewBackground, 
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Icon(
+            Icons.star_rounded, // Rounded star matches your image better
+            color: SAppColors.starYellow, // Or AppColors.starIcon
+            size: 12,
+          ),
+          const SizedBox(width: 2),
+          Text(
+            rating.toStringAsFixed(1),
+            style: STextTheme.lightTextTheme.displaySmall,
+          ),
+        ],
+      ),
+    );
+  }
+}
