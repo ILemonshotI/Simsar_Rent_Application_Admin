@@ -16,7 +16,7 @@ class ThumbnailScroller extends StatelessWidget {
         itemBuilder: (context, index) {
           return ClipRRect(
             borderRadius: BorderRadius.circular(12),
-            child: Image.asset(
+            child: Image.network(
               images[index],
               width: 160,
               height: 110,
