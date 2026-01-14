@@ -1,43 +1,84 @@
-class UserVerificationModel {
+
+  class User {
   final int id;
   final String firstName;
   final String lastName;
   final String phone;
-  final String birthDate;
-  final String createdAt;
+  final String email;
+  final String role;
   final String photo;
   final String idPhotoFront;
   final String idPhotoBack;
-  final int wallet;
+  final DateTime? birthDate;
+  final bool isApproved;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
+  final String? fcmToken;
+  final double wallet;
 
-  UserVerificationModel({
-    required this.id,
-    required this.firstName,
-    required this.lastName,
-    required this.phone,
-    required this.birthDate,
-    required this.createdAt,
-    required this.photo,
-    required this.idPhotoFront,
-    required this.idPhotoBack,
-    required this.wallet,
+  User({
+  required this.id,
+  required this.firstName,
+  required this.lastName,
+  required this.phone,
+  required this.email,
+  required this.role,
+  required this.photo,
+  required this.idPhotoFront,
+  required this.idPhotoBack,
+  this.birthDate,
+  required this.isApproved,
+  this.createdAt,
+  this.updatedAt,
+  this.fcmToken,
+  required this.wallet,
   });
 
-  /// Computed field (not coming from backend)
+  /// Helper to get full name similar to how your Agent model works
   String get fullName => '$firstName $lastName';
 
-  factory UserVerificationModel.fromJson(Map<String, dynamic> json) {
-    return UserVerificationModel(
-      id: json['id'],
-      firstName: json['first_name'],
-      lastName: json['last_name'],
-      phone: json['phone'],
-      birthDate: json['birth_date'],
-      createdAt: json['created_at'],
-      photo: json['photo'],
-      idPhotoFront: json['id_photo_front'],
-      idPhotoBack: json['id_photo_back'],
-      wallet: json['wallet'],
-    );
+  factory User.fromApiJson(Map<String, dynamic> json) {
+  return User(
+  id: json['id'] ?? 0,
+  firstName: json['first_name'] ?? '',
+  lastName: json['last_name'] ?? '',
+  phone: json['phone'] ?? '',
+  email: json['email'] ?? '',
+  role: json['role'] ?? 'tenant',
+  photo: json['photo'] ?? '',
+  idPhotoFront: json['id_photo_front'] ?? '',
+  idPhotoBack: json['id_photo_back'] ?? '',
+  isApproved: json['is_approved'] ?? false,
+  fcmToken: json['fcm_token'],
+  // Handle the numeric wallet value safely as a double
+  wallet: double.tryParse(json['wallet'].toString()) ?? 0.0,
+  // Parse dates safely
+  birthDate: json['birth_date'] != null
+  ? DateTime.tryParse(json['birth_date'])
+      : null,
+  createdAt: json['created_at'] != null
+  ? DateTime.tryParse(json['created_at'])
+      : null,
+  updatedAt: json['updated_at'] != null
+  ? DateTime.tryParse(json['updated_at'])
+      : null,
+  );
   }
-}
+
+  static  User dummy() {
+  return User(
+  id: 0,
+  firstName: "Test",
+  lastName: "User",
+  phone: "000000000",
+  email: "test@example.com",
+  role: "tenant",
+  photo: "",
+  idPhotoFront: "",
+  idPhotoBack: "",
+  isApproved: true,
+  wallet: 0.0,
+  );
+  }
+
+  }

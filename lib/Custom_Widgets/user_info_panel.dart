@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../Models/user_model.dart';
+import '../Models/user_verification_model.dart';
 import 'info_row.dart';
 import 'info_section.dart';
 

@@ -6,6 +6,7 @@ import 'package:simsar_web/Network/api_client.dart';
 import '../Custom_Widgets/identity_panel.dart';
 import '../Custom_Widgets/user_info_panel.dart';
 import '../Models/user_model.dart';
+import '../Models/user_verification_model.dart';
 
 class AdminUserVerificationScreen extends StatelessWidget {
   final int userId;

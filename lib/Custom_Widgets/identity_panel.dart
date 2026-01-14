@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
 import '../Models/user_model.dart';
+import '../Models/user_verification_model.dart';
 import 'id_card.dart';
 
 class IdentityPanel extends StatelessWidget {
