@@ -48,4 +48,6 @@ class SAppColors {
 
   // White with 70% Opacity
   static const Color white70 = Color.fromARGB(179, 255, 255, 255);
+
+  static const Color success = Color(0xFF039855);
 }

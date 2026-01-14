@@ -2,14 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:simsar_web/Theme/app_colors.dart';
 import 'package:simsar_web/Models/user_model.dart'; // Your User model
 
-class UserCard extends StatelessWidget {
+class PendingUserCard extends StatelessWidget {
   final User user;
   final VoidCallback onViewDetails;
+  final VoidCallback onApproved;
 
-  const UserCard({
+  const PendingUserCard({
     super.key,
     required this.user,
     required this.onViewDetails,
+    required this.onApproved,
   });
 
   Widget _buildInfoRow(String label, String value) {
@@ -64,8 +66,11 @@ class UserCard extends StatelessWidget {
           const SizedBox(height: 4),
           _buildInfoRow('Role', user.role),
           const Spacer(),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
           SizedBox(
-            width: 180,
+            width: 100,
             height: 50,
             child: ElevatedButton(
               onPressed: onViewDetails,
@@ -77,8 +82,35 @@ class UserCard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(8), // all corners
                 ),
               ),
-              child: const Text('View Details'),
+              child: const Text(
+                'View Details',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 14), 
+              ),
             ),
+          ),
+          SizedBox(width: 16),
+          SizedBox(
+            width: 100,
+            height: 50,
+            child: ElevatedButton(
+              onPressed: onViewDetails,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: SAppColors.success,
+                foregroundColor: Colors.white,
+                elevation: 0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8), // all corners
+                ),
+              ),
+              child: const Text(
+                'Approve',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 14), 
+              ),
+            ),
+          ),
+          ],
           ),
           const SizedBox(height: 16),
         ],
