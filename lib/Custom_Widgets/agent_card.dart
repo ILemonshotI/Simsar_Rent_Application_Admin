@@ -13,11 +13,7 @@ class AgentCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        CircleAvatar(
-          radius: 28,
-          backgroundColor: SAppColors.primaryBlue.withValues(alpha: 0.1),
-          child: const Icon(Icons.person, size: 28),
-        ),
+        
         const SizedBox(width: 16),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,

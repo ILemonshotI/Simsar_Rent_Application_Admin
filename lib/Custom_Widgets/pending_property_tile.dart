@@ -6,11 +6,13 @@ import 'package:simsar_web/Theme/text_theme.dart';
 class PendingPropertyTile extends StatelessWidget {
   final Property property;
   final VoidCallback onTap;
+  final VoidCallback onPressed;
 
   const PendingPropertyTile({
     super.key, 
     required this.property,
     required this.onTap,
+    required this.onPressed,
   });
 
   @override
@@ -120,7 +122,7 @@ ClipRRect(
                 width: double.infinity,
                 height: 20,
                 child: ElevatedButton(
-                  onPressed: () => debugPrint("Approved!"),
+                  onPressed: onPressed,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: SAppColors.secondaryDarkBlue,
                     foregroundColor: Colors.white,

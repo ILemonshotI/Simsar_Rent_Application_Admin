@@ -17,9 +17,10 @@ class AppRouter {
   static const String pendingUsersScreen = '/users/pending';
   static const String propertyDetails = '/property';
   static const String userDetails = '/user';
+  static const String staticUserDetails = '/static-user';
   
   static final GoRouter router = GoRouter(
-  initialLocation: '/user/5',
+  initialLocation: allPropertiesScreen,
   routes: [
     ShellRoute(
       builder: (context, state, child) {
