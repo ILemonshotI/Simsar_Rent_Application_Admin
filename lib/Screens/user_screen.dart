@@ -8,19 +8,19 @@ import '../Models/user_verification_model.dart';
 import '../Network/api_client.dart';
 import '../Theme/app_colors.dart';
 
-class AdminUserVerificationScreen extends StatefulWidget {
+class UserScreen extends StatefulWidget {
   final int userId;
 
-  const AdminUserVerificationScreen({
+  const UserScreen({
     super.key,
     required this.userId,
   });
 
   @override
-  State<AdminUserVerificationScreen> createState() => _AdminUserVerificationScreenState();
+  State<UserScreen> createState() => _UserScreenState();
 }
 
-class _AdminUserVerificationScreenState extends State<AdminUserVerificationScreen> {
+class _UserScreenState extends State<UserScreen> {
   final TextEditingController _amountController = TextEditingController();
   bool _isAddingMoney = false;
 
@@ -29,9 +29,6 @@ class _AdminUserVerificationScreenState extends State<AdminUserVerificationScree
     return UserVerificationModel.fromJson(response.data);
   }
 
-  Future<void> approveUser(int userId) async {
-    await DioClient.dio.post('/api/users/$userId/approve');
-  }
 
   Future<void> addMoney(int userId, double amount) async {
     await DioClient.dio.post(
@@ -146,30 +143,6 @@ class _AdminUserVerificationScreenState extends State<AdminUserVerificationScree
                         ),
 
                         const SizedBox(height: 48),
-
-                        // ✅ Approve Button
-                        SizedBox(
-                          width: 280,
-                          height: 52,
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.green,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                            ),
-                            onPressed: () async {
-                              await approveUser(user.id);
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(content: Text("User approved successfully")),
-                              );
-                            },
-                            child: const Text(
-                              "Approve User",
-                              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                        )
                       ],
                     ),
                   ),

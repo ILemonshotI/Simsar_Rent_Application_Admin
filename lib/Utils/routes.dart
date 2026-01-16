@@ -7,6 +7,7 @@ import 'package:simsar_web/Screens/pending_properties_screen.dart';
 import 'package:simsar_web/Screens/all_users_screen.dart';
 import 'package:simsar_web/Screens/pending_users_screen.dart';
 import 'package:simsar_web/Screens/admin_home_screen.dart';
+import 'package:simsar_web/Screens/user_screen.dart';
 import 'package:simsar_web/Screens/user_verification_screen.dart';
 
 class AppRouter {
@@ -16,6 +17,7 @@ class AppRouter {
   static const String allUsersScreen = '/users/all';
   static const String pendingUsersScreen = '/users/pending';
   static const String propertyDetails = '/property';
+  static const String unapprovedUserDetails = '/unapproved-user';
   static const String userDetails = '/user';
   
   static final GoRouter router = GoRouter(
@@ -27,6 +29,15 @@ class AppRouter {
       },
       routes: [
         GoRoute(
+            path: '$userDetails/:userId',
+            builder: (context, state) {
+              final id = int.parse(state.pathParameters['userId'] ?? '0');
+
+
+              return UserScreen(userId: id);
+            }
+        ),
+        GoRoute(
         path: '$propertyDetails/:propertyId',
         builder: (context, state) {
           final id = int.parse(state.pathParameters['propertyId'] ?? '0');
@@ -36,7 +47,7 @@ class AppRouter {
         }
         ),
         GoRoute(
-            path: '$userDetails/:userId',
+            path: '$unapprovedUserDetails/:userId',
             builder: (context, state) {
               final id = int.parse(state.pathParameters['userId'] ?? '0');
 
