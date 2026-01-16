@@ -60,7 +60,7 @@ class UserCard extends StatelessWidget {
           const SizedBox(height: 16),
           _buildInfoRow('Full Name', user.fullName),
           const SizedBox(height: 4),
-          _buildInfoRow('Phone Number', user.phone),
+          _buildInfoRow('User ID', '${user.id}'),
           const SizedBox(height: 4),
           _buildInfoRow('Role', user.role),
           const Spacer(),
