@@ -16,15 +16,15 @@ class _SidebarState extends State<Sidebar> {
 
   @override
   Widget build(BuildContext context) {
-    // Get the current route to highlight active items
+   
     final location = GoRouterState.of(context).uri.toString();
 
     return Container(
-      width: 230, // Slightly wider for a more professional feel
+      width: 230, 
       decoration: BoxDecoration(
         color: SAppColors.white,
         border: Border(
-          right: BorderSide(color: Colors.grey.withOpacity(0.1)),
+          right: BorderSide(color: Colors.grey.withValues(alpha:0.1)),
         ),
       ),
       child: Column(
@@ -45,10 +45,9 @@ class _SidebarState extends State<Sidebar> {
             child: ListView(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               children: [
-                /// PROPERTIES SECTION
                 _buildSection(
                   title: "Properties",
-                  icon: Icons.home_outlined, // Modern outlined icon
+                  icon: Icons.home_outlined, 
                   expanded: _propertiesExpanded,
                   isActive: location.startsWith('/properties'),
                   onTap: () {
@@ -94,13 +93,9 @@ class _SidebarState extends State<Sidebar> {
             ),
           ),
 
-          // 3. Footer Admin Card
           const Padding(
             padding: EdgeInsets.all(16.0),
-            child: AdminCard(
-              name: 'Laith Ahmad',
-              phone: '0912345678',
-            ),
+            child: AdminCard(),
           ),
         ],
       ),
@@ -118,7 +113,6 @@ class _SidebarState extends State<Sidebar> {
     return Column(
       children: [
         Theme(
-          // Remove default splash for a cleaner look
           data: ThemeData(splashColor: Colors.transparent, highlightColor: Colors.transparent),
           child: ListTile(
             onTap: onTap,

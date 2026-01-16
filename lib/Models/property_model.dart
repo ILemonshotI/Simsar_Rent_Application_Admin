@@ -67,15 +67,19 @@ class Property {
       reviewsAvgRating: double.tryParse(json['reviews_avg_rating']?.toString() ?? '') ?? 0.0,
       isFavorite: json['is_favorite'] ?? false,
 
-      // Backend doesn’t return agent/reviews yet → safe defaults
-      agent: Agent.fromJson(json['owner']),
+      agent: Agent(
+        id: 0,
+        name: ' ',
+        avatarUrl: '',
+        role: 'agent',
+      ),
       reviewsCount: 0,
     );
 
   }
   factory Property.fromJson(Map<String, dynamic> json) {
     return Property(
-      status: "",
+      status: json['is_approved'] == true ? 'Available' : 'Pending',
       id: json['id'] as int,
       title: json['title'] as String,
       province: ProvinceApiMapper.fromApi(json['province']),
@@ -87,6 +91,7 @@ class Property {
       propertyType: PropertyTypeApiMapper.fromApi(json['type']),
       pricePerDay: double.parse(json['price_per_day']),
       images: List<String>.from(json['images'] ?? []),
+      
 
       areaSqft: json['area'],
       buildYear: json['build_year'],

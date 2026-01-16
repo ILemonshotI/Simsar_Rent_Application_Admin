@@ -65,6 +65,33 @@
   );
   }
 
+  factory User.fromJson(Map<String, dynamic> json) {
+  return User(
+    id: json['id'] ?? 0,
+    firstName: json['first_name'] ?? '',
+    lastName: json['last_name'] ?? '',
+    phone: json['phone'] ?? '000000000',
+    email: json['email'] ?? 'example@example.com',
+    role: json['role'] ?? 'tenant',
+    photo: json['photo'] ?? '',
+    idPhotoFront: json['id_photo_front'] ?? '',
+    idPhotoBack: json['id_photo_back'] ?? '',
+    isApproved: json['is_approved'] ?? false,
+    fcmToken: json['fcm_token'], // can be null
+    wallet: double.tryParse(json['wallet']?.toString() ?? '0.0') ?? 0.0,
+    birthDate: json['birth_date'] != null
+        ? DateTime.tryParse(json['birth_date'])
+        : null,
+    createdAt: json['created_at'] != null
+        ? DateTime.tryParse(json['created_at'])
+        : null,
+    updatedAt: json['updated_at'] != null
+        ? DateTime.tryParse(json['updated_at'])
+        : null,
+  );
+}
+
+
   static  User dummy() {
   return User(
   id: 0,
@@ -78,6 +105,26 @@
   idPhotoBack: "",
   isApproved: true,
   wallet: 0.0,
+  );
+  }
+
+  factory User.unapprovedFromJson(Map<String, dynamic> json) {
+  return User(
+  id: json['id'] ?? 0,
+  firstName: json['first_name'] ?? '',
+  lastName: json['last_name'] ?? '',
+  phone: json['phone'] ?? '',
+  email: json['email'] ?? '',
+  role: json['role'] ?? 'tenant',
+  photo: '',//json['photo'] ?? '',
+  idPhotoFront: '',
+  idPhotoBack:  '',
+  isApproved: json['is_approved'] ?? false,
+  fcmToken: null,
+  wallet: 0.0,
+  birthDate: null,
+  createdAt: null,
+  updatedAt: null,
   );
   }
 

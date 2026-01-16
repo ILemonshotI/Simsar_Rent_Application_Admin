@@ -1,6 +1,6 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 
+import 'package:flutter/material.dart';
+import 'package:simsar_web/Theme/app_colors.dart';
 class InfoSection extends StatelessWidget {
   final String title;
   final List<Widget> children;
@@ -29,7 +29,7 @@ class InfoSection extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(title, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+          Text(title, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: SAppColors.textGray)),
           const SizedBox(height: 16),
           ...children,
         ],

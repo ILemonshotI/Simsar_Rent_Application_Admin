@@ -20,7 +20,7 @@ class DetailsPanel extends StatelessWidget {
         borderRadius: BorderRadius.circular(24),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.06),
+            color: Colors.black.withValues(alpha:0.06),
             blurRadius: 20,
             offset: const Offset(0, 12),
           ),
@@ -52,7 +52,7 @@ class DetailsPanel extends StatelessWidget {
           const SizedBox(height: 6),
 
           Text(
-            "${property.city.name}, ${property.province.name}",
+            "${property.city.displayName}, ${property.province.displayName}",
             style: const TextStyle(
               fontSize: 14,
               color: SAppColors.descriptionTextGray,
@@ -67,7 +67,7 @@ class DetailsPanel extends StatelessWidget {
 
           const Text(
             "Description",
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: SAppColors.textGray),
           ),
 
           const SizedBox(height: 8),
@@ -89,7 +89,7 @@ class DetailsPanel extends StatelessWidget {
             height: 52,
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.red,
+                backgroundColor: SAppColors.error,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),

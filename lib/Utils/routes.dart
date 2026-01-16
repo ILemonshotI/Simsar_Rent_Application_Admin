@@ -19,9 +19,10 @@ class AppRouter {
   static const String propertyDetails = '/property';
   static const String unapprovedUserDetails = '/unapproved-user';
   static const String userDetails = '/user';
+  static const String staticUserDetails = '/static-user';
   
   static final GoRouter router = GoRouter(
-  initialLocation: '/user/5',
+  initialLocation: allPropertiesScreen,
   routes: [
     ShellRoute(
       builder: (context, state, child) {

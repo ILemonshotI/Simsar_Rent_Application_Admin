@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
 import '../Models/property_model.dart';
-
+import 'package:simsar_web/Theme/app_colors.dart';
 class DetailsGrid extends StatelessWidget {
   final Property property;
 
@@ -42,7 +42,7 @@ class _DetailItem extends StatelessWidget {
       children: [
         Text(
           "$label: ",
-          style: const TextStyle(fontWeight: FontWeight.w600),
+          style: const TextStyle(fontWeight: FontWeight.w600 , color: SAppColors.secondaryDarkBlue),
         ),
         Text(value),
       ],

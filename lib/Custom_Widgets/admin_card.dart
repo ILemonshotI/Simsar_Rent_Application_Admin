@@ -1,19 +1,65 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:simsar_web/Theme/app_colors.dart';
-class AdminCard extends StatelessWidget {
-  final String name;
-  final String phone;
-  final String? imageAsset; // optional
+import 'package:simsar_web/Models/user_model.dart';
+import 'package:simsar_web/Network/api_client.dart';
 
+class AdminCard extends StatefulWidget { 
   const AdminCard({
     super.key,
-    required this.name,
-    required this.phone,
-    this.imageAsset,
   });
 
   @override
+  State<AdminCard> createState() => _AdminCardState();
+}
+
+class _AdminCardState extends State<AdminCard> {
+  bool isLoading = true;
+  String? errorMessage;
+  User? user;
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchUser();
+  }
+
+  Future<void> _fetchUser() async {
+    try {
+      final response = await DioClient.dio.get('/api/me');
+      final fetchedUser = User.fromApiJson(response.data);
+
+      setState(() {
+        user = fetchedUser;
+        isLoading = false;
+      });
+    } catch (e) {
+      setState(() {
+        errorMessage = 'Failed to load user info';
+        isLoading = false;
+      });
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
+    if (isLoading) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
+    if (errorMessage != null) {
+      return Center(
+        child: Text(
+          errorMessage!,
+          style: const TextStyle(color: SAppColors.error),
+        ),
+      );
+    }
+
+    final photo = user!.photo;
+    final initials = (user!.firstName.isNotEmpty ? user!.firstName[0] : '') +
+        (user!.lastName.isNotEmpty ? user!.lastName[0] : '');
+        
     return Padding(
       padding: const EdgeInsets.all(16),
       child: Container(
@@ -27,20 +73,21 @@ class AdminCard extends StatelessWidget {
             CircleAvatar(
               radius: 20,
               backgroundColor: SAppColors.white,
-              backgroundImage: AssetImage(
-                imageAsset ?? 'assets/images/profile_placeholder.png',
-              ),
+              backgroundImage: (photo.isNotEmpty)
+                  ? NetworkImage(photo)
+                  : const AssetImage('assets/images/profile_placeholder.png')
+                      as ImageProvider,
             ),
             const SizedBox(width: 10),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  name,
+                  user!.fullName,
                   style: const TextStyle(color: SAppColors.white),
                 ),
                 Text(
-                  phone,
+                  user!.phone,
                   style: const TextStyle(
                     color: SAppColors.white70,
                     fontSize: 12,

@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:simsar_web/Custom_Widgets/user_card.dart';
@@ -10,23 +11,14 @@ class AllUsersScreen extends StatefulWidget {
   const AllUsersScreen({super.key});
 
   @override
-  State<AllUsersScreen> createState() => _AllPropertiesScreenState();
+  State<AllUsersScreen> createState() => _AllUsersScreenState();
 }
 
-class _AllPropertiesScreenState extends State<AllUsersScreen> {
-
-  List<User> dummyUsers = [
-  User.dummy(),
-  User.dummy(),
-  User.dummy(),
-  User.dummy(),
-  User.dummy(),
-  User.dummy(),
-];
-
+class _AllUsersScreenState extends State<AllUsersScreen> {
    List<User> users = [];
    bool isLoading = false;
    String? errorMessage;
+   bool hasFetched = false;
 
   @override
   void initState() {
@@ -37,30 +29,44 @@ class _AllPropertiesScreenState extends State<AllUsersScreen> {
   Future<void> _fetchAllUsers() async {
     try {
       setState(() {
-        isLoading = false;
+        isLoading = true;
         errorMessage = null;
       });
 
-      final response = await DioClient.dio.get('/api/users');
+      final response = await DioClient.dio.get('/api/users/all');
 
-      final List data = response.data['data'] ?? [];
+      final List data = response.data['users'] ?? [];
 
       final fetchedUsers =
-          data.map((e) => User.fromApiJson(e)).toList();
+          data.map((e) => User.fromJson(e)).toList();
 
       setState(() {
         users = fetchedUsers;
+        hasFetched = true;
       });
-    } catch (e) {
+    } on DioException catch (e) {
+    if (e.response?.statusCode == 401) {
       setState(() {
-        errorMessage = 'Failed to load users';
+        hasFetched = true;
+        errorMessage = 'UnAuthenticated'; 
       });
-    } finally {
+    } else {
       setState(() {
-        isLoading = false;
+        errorMessage = 'Failed to load properties';
+        hasFetched = true;
       });
     }
+  } catch (e) {
+    setState(() {
+      errorMessage = 'An unexpected error occurred';
+      hasFetched = true;
+    });
+  } finally {
+    setState(() {
+      isLoading = false;
+    });
   }
+}
 
   @override
   Widget build(BuildContext context) {
@@ -72,39 +78,39 @@ class _AllPropertiesScreenState extends State<AllUsersScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const ScreenHeader(title: "Property Listings"),
+            const ScreenHeader(title: "All Users"),
 
             const DescriptionBanner(
-              message: "Here is a listing of all available properties.",
+              message: "Here is a listing of all users registered in the Simsar App.",
             ),
 
             const SizedBox(height: 32),
 
-            // if (isLoading)
-            //   const Center(
-            //     child: Padding(
-            //       padding: EdgeInsets.symmetric(vertical: 60),
-            //       child: CircularProgressIndicator(),
-            //     ),
-            //   )
-            // else if (errorMessage != null)
-            //   Center(
-            //     child: Padding(
-            //       padding: const EdgeInsets.symmetric(vertical: 60),
-            //       child: Text(
-            //         errorMessage!,
-            //         style: const TextStyle(color: SAppColors.error),
-            //       ),
-            //     ),
-            //   )
-            // else if (mockProperties.isEmpty)
-            //   const Center(
-            //     child: Padding(
-            //       padding: EdgeInsets.symmetric(vertical: 60),
-            //       child: Text("No properties found"),
-            //     ),
-            //   )
-            // else
+            if (isLoading)
+              const Center(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(vertical: 40),
+                  child: CircularProgressIndicator(),
+                ),
+              )
+            else if (errorMessage != null)
+              Center(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 60),
+                  child: Text(
+                    errorMessage!,
+                    style: const TextStyle(color: SAppColors.error),
+                  ),
+                ),
+              )
+            else if (users.isEmpty && hasFetched == true)
+              const Center(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(vertical: 60),
+                  child: Text("No users found"),
+                ),
+              )
+            else
               Center(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -112,12 +118,10 @@ class _AllPropertiesScreenState extends State<AllUsersScreen> {
                     alignment: WrapAlignment.center,
                     spacing: 64,
                     runSpacing: 24,
-                    children: dummyUsers.map((property) {
+                    children: users.map((user) {
                       return UserCard(
-                        user: property,
-                        onViewDetails: () {
-                          
-                        },
+                        user: user,
+                        onViewDetails: () {context.push('/user/${user.id}');},
                       );
                     }).toList(),
                   ),

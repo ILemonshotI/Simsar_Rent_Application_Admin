@@ -1,11 +1,11 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 
+import 'package:flutter/material.dart';
 import '../Models/user_model.dart';
 import '../Models/user_verification_model.dart';
 import 'info_row.dart';
 import 'info_section.dart';
-
+import 'package:simsar_web/Theme/app_colors.dart';
+import 'package:intl/intl.dart';
 class UserInfoPanel extends StatelessWidget {
   final UserVerificationModel user;
 
@@ -17,7 +17,11 @@ class UserInfoPanel extends StatelessWidget {
       children: [
         CircleAvatar(
           radius: 90,
-          backgroundImage: NetworkImage(user.photo),
+          backgroundColor: SAppColors.white,
+              backgroundImage: (user.photo.isNotEmpty)
+                  ? NetworkImage(user.photo)
+                  : const AssetImage('assets/images/profile_placeholder.png')
+                      as ImageProvider,
         ),
 
         const SizedBox(height: 32),
@@ -37,7 +41,11 @@ class UserInfoPanel extends StatelessWidget {
           title: "Account Details",
           children: [
             InfoRow("User ID", user.id.toString()),
-            InfoRow("Date Joined", user.createdAt),
+            InfoRow("Date Joined", 
+            user.createdAt.isNotEmpty
+      ? DateFormat.yMMMMd().format(DateTime.parse(user.createdAt))
+      : 'N/A', 
+      ),
           ],
         ),
       ],

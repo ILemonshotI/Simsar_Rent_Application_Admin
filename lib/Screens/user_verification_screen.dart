@@ -67,7 +67,6 @@ class _AdminUserVerificationScreenState extends State<AdminUserVerificationScree
           final user = snapshot.data!;
 
           return SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 24),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
