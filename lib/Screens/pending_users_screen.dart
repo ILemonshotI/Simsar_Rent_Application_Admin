@@ -164,7 +164,7 @@ Future<void> _approveUser(int userId) async {
                     children: users.map((user) {
                       return PendingUserCard(
                         user: user,
-                        onViewDetails: () {context.push('/user/${user.id}');},
+                        onViewDetails: () {context.push('/unapproved-user/${user.id}');},
                         onApproved:() => _approveUser(user.id),
                       );
                     }).toList(),

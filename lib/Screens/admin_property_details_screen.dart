@@ -19,7 +19,7 @@ class AdminPropertyDetailsScreen extends StatelessWidget {
   });
 
   Future<Property> fetchProperty(int apartmentId) async {
-    final response = await DioClient.dio.get('/api/apartments/$apartmentId');
+    final response = await DioClient.dio.get('/api/apartments/admin/$apartmentId');
     return Property.fromJson(response.data);
   }
 

@@ -25,12 +25,12 @@ class _AdminUserVerificationScreenState extends State<AdminUserVerificationScree
   bool _isAddingMoney = false;
 
   Future<UserVerificationModel> fetchUser(int userId) async {
-    final response = await DioClient.dio.get('/api/users/$userId');
+    final response = await DioClient.dio.get('/api/users/admin/$userId');
     return UserVerificationModel.fromJson(response.data);
   }
 
   Future<void> approveUser(int userId) async {
-    await DioClient.dio.post('/api/users/$userId/approve');
+    await DioClient.dio.patch('/api/users/$userId/approve');
   }
 
   Future<void> addMoney(int userId, double amount) async {
