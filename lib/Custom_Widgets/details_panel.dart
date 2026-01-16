@@ -8,8 +8,14 @@ import '../Custom_Widgets/details_grid.dart';
 import '../Custom_Widgets/agent_card.dart';
 class DetailsPanel extends StatelessWidget {
   final Property property;
+  final VoidCallback onDeletePressed;
+  
 
-  const DetailsPanel({required this.property});
+  const DetailsPanel({
+    super.key, 
+    required this.property,
+    required this.onDeletePressed,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -95,6 +101,7 @@ class DetailsPanel extends StatelessWidget {
                 ),
               ),
               onPressed: () {
+                onDeletePressed();
                 debugPrint("Delete Property ${property.id}");
               },
               child: const Text(

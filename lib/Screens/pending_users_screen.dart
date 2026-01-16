@@ -72,9 +72,7 @@ class _PendingUsersScreenState extends State<PendingUsersScreen> {
 
 Future<void> _approveUser(int userId) async {
   try {
-    await DioClient.dio.post(
-      '/api/user/$userId/approve',
-    );
+    await DioClient.dio.patch('/api/users/$userId/approve');
 
     setState(() {
       users.removeWhere((p) => p.id == userId);

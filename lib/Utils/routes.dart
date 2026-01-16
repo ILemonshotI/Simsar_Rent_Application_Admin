@@ -22,8 +22,14 @@ class AppRouter {
   static const String staticUserDetails = '/static-user';
   
   static final GoRouter router = GoRouter(
-  initialLocation: allPropertiesScreen,
+  initialLocation: home,
   routes: [
+    GoRoute(
+            path: home,
+            builder: (context, state) {
+              return LoginScreen();
+            }
+        ),
     ShellRoute(
       builder: (context, state, child) {
         return MainWebLayout(child: child);

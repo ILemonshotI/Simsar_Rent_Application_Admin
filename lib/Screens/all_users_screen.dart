@@ -37,8 +37,10 @@ class _AllUsersScreenState extends State<AllUsersScreen> {
 
       final List data = response.data['users'] ?? [];
 
-      final fetchedUsers =
-          data.map((e) => User.fromJson(e)).toList();
+      final fetchedUsers = data
+        .map((e) => User.fromJson(e))
+        .where((user) => user.isApproved == true) // Only keep approved users
+        .toList();
 
       setState(() {
         users = fetchedUsers;

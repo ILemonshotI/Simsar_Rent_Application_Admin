@@ -94,7 +94,7 @@ class PendingUserCard extends StatelessWidget {
             width: 100,
             height: 50,
             child: ElevatedButton(
-              onPressed: onViewDetails,
+              onPressed: onApproved,
               style: ElevatedButton.styleFrom(
                 backgroundColor: SAppColors.success,
                 foregroundColor: Colors.white,

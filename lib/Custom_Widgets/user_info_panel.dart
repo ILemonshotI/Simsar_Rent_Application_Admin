@@ -13,6 +13,7 @@ class UserInfoPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    debugPrint('DEBUG - Current Photo URL: ${user.photo}');
     return Column(
       children: [
         CircleAvatar(
@@ -23,7 +24,7 @@ class UserInfoPanel extends StatelessWidget {
                   : const AssetImage('assets/images/profile_placeholder.png')
                       as ImageProvider,
         ),
-
+  
         const SizedBox(height: 32),
 
         InfoSection(
